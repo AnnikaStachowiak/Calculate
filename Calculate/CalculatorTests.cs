@@ -14,72 +14,82 @@ namespace Calculate.Tests
 
             [TestMethod]
             public void TestAdditionCorrect()
-            {
-                double testAddActual = Calculator.Add(1, 2);
-                double testAddExpect = 3;
-                Assert.AreEqual<double>(testAddExpect, testAddActual);
-            }
+        {
+            string testInput = "1 + 2";
+            int testExpect = 3;
+            Assert.AreEqual(Calculator.TryCalculate(testInput, out testExpect));
+        }
 
-            [TestMethod]
+        [TestMethod]
             public void TestSubtractionCorrect()
             {
-                double testSubtractActual = Calculator.Subtract(3, 2);
-                double testSubtractExpect = 1;
-                Assert.AreEqual<double>(testSubtractExpect, testSubtractActual);
+                string testInput = "3 - 2";
+                int testExpect = 1;
+                Assert.AreEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
 
-            [TestMethod]
+        [TestMethod]
             public void TestMultiplicationCorrect()
             {
-                double testMultiplyActual = Calculator.Multiply(1, 2);
-                double testMultiplyExpect = 2;
-                Assert.AreEqual<double>(testMultiplyExpect, testMultiplyActual);
+                string testInput = "1 * 2";
+                int testExpect = 2;
+                Assert.AreEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
 
-            [TestMethod]
+        [TestMethod]
             public void TestDivisionCorrect()
             {
-                double testDivideActual = Calculator.Divide(6, 2);
-                double testDivideExpect = 3;
-                Assert.AreEqual<double>(testDivideExpect, testDivideActual);
+                string testInput = "6 / 3";
+                int testExpect = 2;
+                Assert.AreEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
 
-            [TestMethod]
+        [TestMethod]
             public void TestAdditionIncorrect()
             {
-                double testAddActual = Calculator.Add(1, 2);
-                double testAddExpect = 3;
-                Assert.AreNotEqual<double>(testAddExpect, testAddActual);
+                string testInput = "1 + 2";
+                int testExpect = 3;
+                Assert.AreNotEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
 
-            [TestMethod]
+        [TestMethod]
             public void TestSubtractionIncorrect()
             {
-                double testSubtractActual = Calculator.Subtract(3, 2);
-                double testSubtractExpect = 1;
-                Assert.AreNotEqual<double>(testSubtractExpect, testSubtractActual);
+                string testInput = "3 - 2";
+                int testExpect = 1;
+                Assert.AreNotEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
 
-            [TestMethod]
+        [TestMethod]
             public void TestMultiplicationIncorrect()
             {
-                double testMultiplyActual = Calculator.Multiply(1, 2);
-                double testMultiplyExpect = 2;
-                Assert.AreNotEqual<double>(testMultiplyExpect, testMultiplyActual);
+                string testInput = "1 * 2";
+                int testExpect = 2;
+                Assert.AreNotEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
 
-            [TestMethod]
+        [TestMethod]
             public void TestDivisionIncorrect()
             {
-                double testDivideActual = Calculator.Divide(6, 2);
-                double testDivideExpect = 3;
-                Assert.AreNotEqual<double>(testDivideExpect, testDivideActual);
+                string testInput = "6 / 3";
+                int testExpect = 2;
+                Assert.AreNotEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
 
             [TestMethod]
-                public void TestInvalidInput()
-                {
-
-                }
+            public void TestInvalidInputNoSpace()
+            {
+                string testInput = "1+2";
+                int testExpect = 0;
+                Assert.AreEqual(Calculator.TryCalculate(testInput, out testExpect));
             }
+
+            [TestMethod]
+            public void TestInvalidInputNull()
+            {
+                string testInput = "";
+                int testExpect = 0;
+                Assert.AreEqual(Calculator.TryCalculate(testInput, out testExpect));
+            }
+    }
 }
