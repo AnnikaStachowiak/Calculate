@@ -6,29 +6,29 @@ namespace Calculate
     {
         // private int _WriteLine;
         // private int _ReadLine;
-        private readonly Action<string> _WriteLine;
-        private readonly Func<string> _ReadLine;
+        public Action<string> WriteLine { get; init; }
+        public Func<string?> ReadLine { get; init; }
 
-       public Program(Action<string> writeLine, Func<string> readline)
+        public Program(Action<string> writeLine, Func<string> readLine)
         {
-            _WriteLine = writeLine;
-            _ReadLine = readline;
+            WriteLine = writeLine;
+            ReadLine = readLine;
         }
 
-        public static void Main(string[] args)
+        public static void Main()
         {
-            Program program = new Program(Console.WriteLine, Console.ReadLine);
+            Program program = new(Console.WriteLine, Console.ReadLine);
 
-           // Calculator calculator = new();
+            // Calculator calculator = new();
 
             bool quit = false;
 
-            
+
             while (quit == false)
             {
                 Console.WriteLine("Please enter a function in the form: x operator y, or q to quit");
 
-                string input = program._ReadLine().Trim();
+                string input = program.ReadLine().Trim();
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
@@ -36,7 +36,7 @@ namespace Calculate
                 }
                 if (Calculator.TryCalculate(input, out int result))
                 {
-                    program._WriteLine(result.ToString());
+                    program.WriteLine(result.ToString());
                 }
                 else if (input.Equals("q"))
                 {
