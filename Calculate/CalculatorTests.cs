@@ -6,106 +6,41 @@ namespace Calculate.Tests
     [TestClass]
     public class CalculatorTests
     {
-        Calculator calc = new();
 
         [TestMethod]
-        public void TestAdditionCorrect()
+        [DataRow("1 + 2", 3)]
+        [DataRow("3 - 2", 1)]
+        [DataRow("1 * 2", 2)]
+        [DataRow("6 / 2", 3)]
+        public void TryCalculate_Valid_Success(string calculation, int expected)
         {
-            string testInput = "1 + 2";
-            int testExpect = 3;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreEqual<int>(testExpect, testOutput);
+            Calculator calculator = new();
+
+            bool isSuccess = calculator.TryCalculate(calculation, out int result);
+
+            Assert.AreEqual<int>(expected, result);
+            Assert.AreEqual<bool>(true, isSuccess);
         }
-
         [TestMethod]
-        public void TestSubtractionCorrect()
+        [DataRow("1 + 2", 0)]
+        [DataRow("3 - 2", 0)]
+        [DataRow("1 * 2", 0)]
+        [DataRow("6 / 2", 0)]
+        [DataRow("6 + 2 + 2", 0)]
+        [DataRow(" 6 + 2", 0)]
+        [DataRow("3 -- 2", 0)]
+        [DataRow("3 -2", 0)]
+        [DataRow("6 / / 2", 0)]
+        [DataRow("g / h", 0)]
+        [DataRow(" ", 0)]
+        public void TryCalculate_Invalid_NotSuccess(string calculation, int expected)
         {
-            string testInput = "3 - 2";
-            int testExpect = 1;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreEqual<int>(testExpect, testOutput);
-        }
+            Calculator calculator = new();
 
-        [TestMethod]
-        public void TestMultiplicationCorrect()
-        {
-            string testInput = "1 * 2";
-            int testExpect = 2;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreEqual<int>(testExpect, testOutput);
-        }
+            bool isSuccess = calculator.TryCalculate(calculation, out int result);
 
-        [TestMethod]
-        public void TestDivisionCorrect()
-        {
-            string testInput = "6 / 2";
-            int testExpect = 3;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreEqual<int>(testExpect, testOutput);
-        }
-
-        [TestMethod]
-        public void TestAdditionIncorrect()
-        {
-            string testInput = "1 + 2";
-            int testExpect = 4;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreNotEqual<int>(testExpect, testOutput);
-        }
-
-        [TestMethod]
-        public void TestSubtractionIncorrect()
-        {
-            string testInput = "3 - 2";
-            int testExpect = 5;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreNotEqual<int>(testExpect, testOutput);
-        }
-
-        [TestMethod]
-        public void TestMultiplicationIncorrect()
-        {
-            string testInput = "1 * 2";
-            int testExpect = 1;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreNotEqual<int>(testExpect, testOutput);
-        }
-
-        [TestMethod]
-        public void TestDivisionIncorrect()
-        {
-            string testInput = "6 / 2";
-            int testExpect = 4;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreNotEqual<int>(testExpect, testOutput);
-        }
-
-        [TestMethod]
-        public void TestInvalidInputNoSpace()
-        {
-            string testInput = "1+2";
-            int testExpect = 3;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreNotEqual<int>(testExpect, testOutput);
-        }
-
-        [TestMethod]
-        public void TestInvalidInputNull()
-        {
-            string testInput = "";
-            int testExpect = 0;
-            bool testBool = Calculator.TryCalculate(testInput, out int testOutput);
-            Assert.IsTrue(testBool);
-            Assert.AreNotEqual<int>(testExpect, testOutput);
+            Assert.AreEqual<int>(expected, result);
+            Assert.AreEqual<bool>(false, isSuccess);
         }
     }
 }
